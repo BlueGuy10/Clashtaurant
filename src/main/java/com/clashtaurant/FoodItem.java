@@ -68,4 +68,16 @@ public abstract class FoodItem {
     public static List<FoodItem> getDrinks() {
         return drinks;
     }
+
+    public double getSPrice() {
+        return sPrice;
+    }
+
+    public double getMPrice() {
+        return mPrice;
+    }
+
+    public double getLPrice() {
+        return lPrice;
+    }
 }

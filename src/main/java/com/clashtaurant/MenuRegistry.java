@@ -32,7 +32,6 @@ public final class MenuRegistry {
         new com.clashtaurant.foods.desserts.DarkPrinceDonut();
         new com.clashtaurant.foods.desserts.IceSpiritIceCream();
         new com.clashtaurant.foods.desserts.LavaHoundLavaCake();
-        new com.clashtaurant.foods.desserts.Lavahoundslavacake();
         new com.clashtaurant.foods.desserts.LogCake();
         new com.clashtaurant.foods.desserts.Motherwitchcookies();
         new com.clashtaurant.foods.desserts.Princesspie();

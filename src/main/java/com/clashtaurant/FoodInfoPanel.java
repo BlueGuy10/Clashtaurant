@@ -61,7 +61,7 @@ public class FoodInfoPanel extends JPanel {
         description.setBounds(700, 300, 300, 100);
         this.add(description);
 
-        JButton small = new JButton("Small");
+        JButton small = new JButton("Small: $" + foodItem.getSPrice());
         small.addMouseListener(new  MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -78,7 +78,7 @@ public class FoodInfoPanel extends JPanel {
         small.setBounds(700, 400, 300, 100);
         this.add(small);
 
-        JButton medium = new JButton("Medium");
+        JButton medium = new JButton("Medium: $" + foodItem.getMPrice());
         medium.addMouseListener(new  MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -96,7 +96,7 @@ public class FoodInfoPanel extends JPanel {
         medium.setBounds(700, 500, 300, 100);
         this.add(medium);
 
-        JButton large = new JButton("Large");
+        JButton large = new JButton("Large: $" + foodItem.getLPrice());
         large.addMouseListener(new  MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

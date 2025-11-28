@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 class FoodItemPanel extends JPanel {
-    public static final int ITEM_SIZE = 175;
+    public int ITEM_SIZE = 175;
     private BufferedImage image;
 
     public FoodItemPanel(FoodItem foodItem, GUI gui, Order order) {
@@ -49,6 +49,32 @@ class FoodItemPanel extends JPanel {
                 gui.makeFoodPanel(foodItem, order);
             }
         });
+    }
+
+    public FoodItemPanel(FoodItem foodItem) {
+        ITEM_SIZE = 100;
+        try {
+            InputStream imageStream = getClass().getResourceAsStream(foodItem.getImagePath());
+            if (imageStream != null) {
+                image = ImageIO.read(imageStream);
+            } else {
+                // Fallback placeholder if resource path is invalid
+                image = new BufferedImage(ITEM_SIZE, ITEM_SIZE, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2 = image.createGraphics();
+                g2.setColor(Color.LIGHT_GRAY);
+                g2.fillRect(0, 0, ITEM_SIZE, ITEM_SIZE);
+                g2.setColor(Color.DARK_GRAY);
+                g2.drawString("No Image", 10, ITEM_SIZE / 2);
+                g2.dispose();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Ensure image is non-null to avoid NPE in paint
+            image = new BufferedImage(ITEM_SIZE, ITEM_SIZE, BufferedImage.TYPE_INT_ARGB);
+        }
+        setPreferredSize(new Dimension(ITEM_SIZE, ITEM_SIZE));
+        setOpaque(false);
+
     }
 
     @Override

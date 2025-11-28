@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
@@ -58,12 +60,11 @@ public class GUI extends JFrame {
         JButton mainsTab = new JButton("Mains Tab");
         JButton dessertsTab = new JButton("Desserts Tab");
         JButton drinksTab = new JButton("Drinks Tab");
-        JButton orderTab = new JButton("ORDER");
+        JButton orderTab = new JButton("Order");
         mainsTab.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 hidePanels();
-                System.out.println("Mains Tab");
                 makeMainPanel(order, FoodCategory.MAIN);
                 GUI.super.repaint();
                 showPanels();
@@ -74,7 +75,6 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 hidePanels();
-                System.out.println("Desserts Tab");
                 makeMainPanel(order, FoodCategory.DESSERT);
                 GUI.super.repaint();
                 showPanels();
@@ -85,7 +85,6 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 hidePanels();
-                System.out.println("Drinks Tab");
                 makeMainPanel(order, FoodCategory.DRINK);
                 GUI.super.repaint();
                 showPanels();
@@ -95,7 +94,7 @@ public class GUI extends JFrame {
         orderTab.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Order Tab");
+                makeOrderPanel(order);
             }
         });
         tabs.add(mainsTab);
@@ -107,6 +106,61 @@ public class GUI extends JFrame {
 
         //.add(SidePanel, BorderLayout.WEST);
         setVisible(true);
+    }
+
+    private void makeOrderPanel(Order order) {
+        remove(mainPanel);
+        mainPanel = new JPanel();
+        mainPanel.setBounds(100, 100, 700, 700);
+        System.out.println("Order Tab");
+        hidePanels();
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBounds(100, 100, 300, 700);
+        for (FoodItem item :
+                order.getOrderContents()) {
+            JPanel panelToAdd = new JPanel();
+            panelToAdd.setBounds(0, 0, 100, 700);
+            FoodItemPanel image = new FoodItemPanel(item);
+            image.setBounds(0, 0, 100, 100);
+            image.setPreferredSize(new Dimension(100, 100));
+            panelToAdd.add(image);
+            JLabel info = new JLabel("<html>$"+item.getPrice()+"<br>"+item.getSize()+"</html>");
+            info.setBounds(100, 0, 100, 100);
+            info.setPreferredSize(new Dimension(100, 100));
+            panelToAdd.add(info);
+            JButton remove = new JButton("Remove");
+            remove.addMouseListener(new  MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    order.getOrderContents().remove(item);
+                    makeOrderPanel(order);
+                }
+            });
+            remove.setBounds(200, 0, 100, 100);
+            remove.setPreferredSize(new Dimension(100, 100));
+            panelToAdd.add(remove);
+            panelToAdd.setPreferredSize(new Dimension(300, 100));
+            panel.add(panelToAdd);
+        }
+        JScrollPane scrollPane = new JScrollPane(panel);
+        scrollPane.setPreferredSize(new Dimension(300, 700));
+        scrollPane.createVerticalScrollBar();
+        mainPanel.add(scrollPane);
+        JButton checkoutButton = new JButton("Checkout");
+        checkoutButton.addMouseListener(new  MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, "Checkout Successful for $"+order.calculateFinalPrice());
+                System.exit(0);
+            }
+        });
+        checkoutButton.setBounds(300, 0, 400, 700);
+        mainPanel.add(checkoutButton);
+        add(mainPanel);
+        GUI.super.repaint();
+        showPanels();
+        GUI.super.repaint();
     }
 
     public void makeMainPanel(Order order, FoodCategory category) {

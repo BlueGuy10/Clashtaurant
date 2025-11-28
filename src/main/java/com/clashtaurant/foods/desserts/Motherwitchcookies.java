@@ -6,6 +6,6 @@ import com.clashtaurant.Size;
 
 public class Motherwitchcookies extends FoodItem {
     public Motherwitchcookies (){
-        super ("Mother witch cookies", "cookies","asd", 5,6,7, FoodCategory.DESSERT );
+        super ("Mother witch cookies", "cookies","/images/MotherWitchCookies.png", 5,6,7, FoodCategory.DESSERT );
     }
 }
