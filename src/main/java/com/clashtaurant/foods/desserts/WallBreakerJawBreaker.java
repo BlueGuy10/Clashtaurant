@@ -5,6 +5,6 @@ import com.clashtaurant.FoodItem;
 
 public class WallBreakerJawBreaker extends FoodItem {
     public WallBreakerJawBreaker() {
-        super("Wall Breaker Jaw Breaker","Hurts your jaws :c","FILE PATHHH HAHAHAHAHAAH",1,1,1, FoodCategory.DESSERT);
+        super("Wall Breaker Jaw Breaker","Hurts your jaws :c","/images/WallbreakerJawBreaker.png",1,1,1, FoodCategory.DESSERT);
     }
 }
