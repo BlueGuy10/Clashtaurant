@@ -35,31 +35,38 @@ public class GUI extends JFrame {
         // Ensure menu items are registered before building UI
         try { MenuRegistry.init(); } catch (Throwable ignored) {}
         //Create frame
-        this.setBounds(0, 0, 1015, 839);
+        this.setBounds(0, 0, 1000, 800);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
+
+        this.getContentPane().setBackground(Color.WHITE);
 
         //Create Top Panel
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
         topPanel.setBounds(0, 0, 1000, 100);
-        topPanel.setBackground(Color.GREEN);
+        topPanel.setBackground(Color.WHITE);
+        JLabel name = new JLabel("Clashers: Clash Royale x Food");
+        name.setFont(getClashFont().deriveFont(40.0f));
+        name.setHorizontalAlignment(JLabel.CENTER);
+        name.setBounds(0,0,1000,100);
+        topPanel.add(name);
         this.add(topPanel);
 
         //Create Tabs panel;
         tabs = new JPanel();
         tabs.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
-        tabs.setBounds(0, 100, 100, 525);
-        tabs.setBackground(Color.RED);
+        tabs.setBounds(0, 100, 100, 700);
+        tabs.setBackground(Color.WHITE);
         this.add(tabs);
 
         //Make tab buttons
 
 
-        JButton mainsTab = new JButton("Mains Tab");
-        JButton dessertsTab = new JButton("Desserts Tab");
-        JButton drinksTab = new JButton("Drinks Tab");
+        JButton mainsTab = new JButton("Mains");
+        JButton dessertsTab = new JButton("Desserts");
+        JButton drinksTab = new JButton("Drinks");
         JButton orderTab = new JButton("Order");
         mainsTab.addActionListener(new ActionListener() {
             @Override
@@ -112,7 +119,8 @@ public class GUI extends JFrame {
         remove(mainPanel);
         mainPanel = new JPanel();
         mainPanel.setBounds(100, 100, 700, 700);
-        System.out.println("Order Tab");
+        mainPanel.setLayout(null);
+        mainPanel.setBackground(Color.WHITE);
         hidePanels();
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -144,9 +152,14 @@ public class GUI extends JFrame {
             panel.add(panelToAdd);
         }
         JScrollPane scrollPane = new JScrollPane(panel);
-        scrollPane.setPreferredSize(new Dimension(300, 700));
+        scrollPane.setBounds(0,0,400,700);
+        scrollPane.setPreferredSize(new Dimension(400, 700));
         scrollPane.createVerticalScrollBar();
         mainPanel.add(scrollPane);
+        JLabel totalPrice = new JLabel("$"+order.calculateFinalPrice());
+        totalPrice.setHorizontalAlignment(JLabel.CENTER);
+        totalPrice.setBounds(400,0,300,400);
+        mainPanel.add(totalPrice);
         JButton checkoutButton = new JButton("Checkout");
         checkoutButton.addMouseListener(new  MouseAdapter() {
             @Override
@@ -155,7 +168,7 @@ public class GUI extends JFrame {
                 System.exit(0);
             }
         });
-        checkoutButton.setBounds(300, 0, 400, 700);
+        checkoutButton.setBounds(400, 400, 300, 300);
         mainPanel.add(checkoutButton);
         add(mainPanel);
         GUI.super.repaint();
@@ -170,7 +183,7 @@ public class GUI extends JFrame {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(4, 4));
         mainPanel.setBounds(100, 100, 700, 700);
-        mainPanel.setBackground(Color.BLUE);
+        mainPanel.setBackground(Color.WHITE);
         List<FoodItem> list = switch (category) {
             case MAIN -> FoodItem.getMains();
             case DESSERT -> FoodItem.getDesserts();
@@ -178,6 +191,7 @@ public class GUI extends JFrame {
         };
         for (FoodItem item : list) {
             FoodItemPanel panel = new FoodItemPanel(item, this, order);
+            panel.setPreferredSize(new Dimension(175, 175));
             mainPanel.add(panel);
         }
         this.add(mainPanel);

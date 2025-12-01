@@ -34,14 +34,8 @@ class FoodItemPanel extends JPanel {
             // Ensure image is non-null to avoid NPE in paint
             image = new BufferedImage(ITEM_SIZE, ITEM_SIZE, BufferedImage.TYPE_INT_ARGB);
         }
-        try {
-            InputStream stream = getClass().getResourceAsStream("/font/YouBlockHead.ttf");
-            Font yourFont = Font.createFont(Font.TRUETYPE_FONT, stream);
-            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(yourFont);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         setPreferredSize(new Dimension(ITEM_SIZE, ITEM_SIZE));
+        setBounds(0,0,175,175);
         setOpaque(false);
         addMouseListener(new MouseAdapter() {
             @Override

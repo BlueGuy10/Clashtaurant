@@ -6,7 +6,7 @@ import java.io.InputStream;
 public class GetFont {
     static Font getClashFont() {
         try {
-            InputStream stream = GetFont.class.getResourceAsStream("/font/YouBlockHead.ttf");
+            InputStream stream = GetFont.class.getResourceAsStream("/font/YouBlockhead.ttf");
             if (stream != null) {
                 Font yourFont = Font.createFont(Font.TRUETYPE_FONT, stream);
                 GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(yourFont);

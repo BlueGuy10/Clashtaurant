@@ -16,7 +16,7 @@ public class FoodInfoPanel extends JPanel {
     FoodInfoPanel(FoodItem foodItem, Order order) {
         setLayout(null);
         setBounds(0, 100, 1000, 700);
-        setBackground(Color.ORANGE);
+        setBackground(Color.WHITE);
         Image scaled;
         java.net.URL imgUrl = getClass().getResource(foodItem.getImagePath());
         if (imgUrl != null) {
@@ -49,23 +49,23 @@ public class FoodInfoPanel extends JPanel {
                 }
             }
         });
-        close.setBounds(700, 0, 300, 100);
+        close.setBounds(700, 600, 300, 100);
         this.add(close);
 
         JLabel name = new JLabel(foodItem.getName());
-        name.setBounds(700, 200, 300, 100);
+        name.setBounds(700, 0, 300, 100);
         name.setHorizontalAlignment(JLabel.CENTER);
         this.add(name);
 
         JLabel description = new JLabel("<html>"+foodItem.getDescription()+"</html>");
-        description.setBounds(700, 300, 300, 100);
+        description.setBounds(700, 100, 300, 100);
         this.add(description);
 
         JButton small = new JButton("Small: $" + foodItem.getSPrice());
         small.addMouseListener(new  MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                FoodItem item = foodItem;
+                FoodItem item = (FoodItem) foodItem.clone();
                 item.setSize(Size.S);
                 order.getOrderContents().add(item);
                 try {
@@ -75,14 +75,14 @@ public class FoodInfoPanel extends JPanel {
                 }
             }
         });
-        small.setBounds(700, 400, 300, 100);
+        small.setBounds(700, 200, 300, 100);
         this.add(small);
 
         JButton medium = new JButton("Medium: $" + foodItem.getMPrice());
         medium.addMouseListener(new  MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                FoodItem item = foodItem;
+                FoodItem item = (FoodItem) foodItem.clone();
                 item.setSize(Size.M);
                 order.getOrderContents().add(item);
                 try {
@@ -93,14 +93,14 @@ public class FoodInfoPanel extends JPanel {
 
             }
         });
-        medium.setBounds(700, 500, 300, 100);
+        medium.setBounds(700, 300, 300, 100);
         this.add(medium);
 
         JButton large = new JButton("Large: $" + foodItem.getLPrice());
         large.addMouseListener(new  MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                FoodItem item = foodItem;
+                FoodItem item = (FoodItem) foodItem.clone();
                 item.setSize(Size.L);
                 order.getOrderContents().add(item);
                 try {
@@ -110,7 +110,7 @@ public class FoodInfoPanel extends JPanel {
                 }
             }
         });
-        large.setBounds(700, 600, 300, 100);
+        large.setBounds(700, 400, 300, 100);
         this.add(large);
 
         this.setVisible(true);

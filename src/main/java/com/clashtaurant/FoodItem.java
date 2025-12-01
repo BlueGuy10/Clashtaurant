@@ -3,7 +3,7 @@ package com.clashtaurant;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FoodItem {
+public abstract class FoodItem implements Cloneable {
     private final String name;
     private final String description;
     private final String imagePath;
@@ -15,7 +15,7 @@ public abstract class FoodItem {
     private static List<FoodItem> desserts = new ArrayList<FoodItem>();
     private static List<FoodItem> drinks = new ArrayList<FoodItem>();
 
-    protected FoodItem(String name, String description, String imagePath, double sPrice, double mPrice, double lPrice, FoodCategory category) {
+    public FoodItem(String name, String description, String imagePath, double sPrice, double mPrice, double lPrice, FoodCategory category) {
         this.description = description;
         this.name = name;
         this.imagePath = imagePath;
@@ -79,5 +79,14 @@ public abstract class FoodItem {
 
     public double getLPrice() {
         return lPrice;
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
