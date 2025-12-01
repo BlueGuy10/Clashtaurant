@@ -1,7 +1,6 @@
 package com.clashtaurant;
 
 import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,8 +31,12 @@ public class GUI extends JFrame {
     public GUI(Order order) {
         UIManager.put("Button.font", getClashFont());
         UIManager.put("Label.font", getClashFont());
+        UIManager.put("Button.background", Color.decode("#FEB902"));
         // Ensure menu items are registered before building UI
-        try { MenuRegistry.init(); } catch (Throwable ignored) {}
+        try {
+            MenuRegistry.init();
+        } catch (Throwable ignored) {
+        }
         //Create frame
         this.setBounds(0, 0, 1000, 800);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -50,7 +53,7 @@ public class GUI extends JFrame {
         JLabel name = new JLabel("Clashers: Clash Royale x Food");
         name.setFont(getClashFont().deriveFont(40.0f));
         name.setHorizontalAlignment(JLabel.CENTER);
-        name.setBounds(0,0,1000,100);
+        name.setBounds(0, 0, 1000, 100);
         topPanel.add(name);
         this.add(topPanel);
 
@@ -64,19 +67,16 @@ public class GUI extends JFrame {
         //Make tab buttons
 
 
-        JButton mainsTab = new JButton("Mains");
-        JButton dessertsTab = new JButton("Desserts");
-        JButton drinksTab = new JButton("Drinks");
-        JButton orderTab = new JButton("Order");
-        mainsTab.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                hidePanels();
-                makeMainPanel(order, FoodCategory.MAIN);
-                GUI.super.repaint();
-                showPanels();
-                GUI.super.repaint();
-            }
+        JButton mainsTab = new ClashButton("Mains", 100, 20);
+        JButton dessertsTab = new ClashButton("Desserts", 100, 20);
+        JButton drinksTab = new ClashButton("Drinks", 100, 20);
+        JButton orderTab = new ClashButton("Order", 100, 20);
+        mainsTab.addActionListener(e -> {
+            hidePanels();
+            makeMainPanel(order, FoodCategory.MAIN);
+            GUI.super.repaint();
+            showPanels();
+            GUI.super.repaint();
         });
         dessertsTab.addActionListener(new ActionListener() {
             @Override
@@ -88,15 +88,12 @@ public class GUI extends JFrame {
                 GUI.super.repaint();
             }
         });
-        drinksTab.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                hidePanels();
-                makeMainPanel(order, FoodCategory.DRINK);
-                GUI.super.repaint();
-                showPanels();
-                GUI.super.repaint();
-            }
+        drinksTab.addActionListener(e -> {
+            hidePanels();
+            makeMainPanel(order, FoodCategory.DRINK);
+            GUI.super.repaint();
+            showPanels();
+            GUI.super.repaint();
         });
         orderTab.addActionListener(new ActionListener() {
             @Override
@@ -133,12 +130,12 @@ public class GUI extends JFrame {
             image.setBounds(0, 0, 100, 100);
             image.setPreferredSize(new Dimension(100, 100));
             panelToAdd.add(image);
-            JLabel info = new JLabel("<html>$"+item.getPrice()+"<br>"+item.getSize()+"</html>");
+            JLabel info = new JLabel("<html>$" + item.getPrice() + "<br>" + item.getSize() + "</html>");
             info.setBounds(100, 0, 100, 100);
             info.setPreferredSize(new Dimension(100, 100));
             panelToAdd.add(info);
-            JButton remove = new JButton("Remove");
-            remove.addMouseListener(new  MouseAdapter() {
+            JButton remove = new ClashButton("Remove", 100, 100);
+            remove.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     order.getOrderContents().remove(item);
@@ -152,19 +149,20 @@ public class GUI extends JFrame {
             panel.add(panelToAdd);
         }
         JScrollPane scrollPane = new JScrollPane(panel);
-        scrollPane.setBounds(0,0,400,700);
+        scrollPane.setBounds(0, 0, 400, 700);
         scrollPane.setPreferredSize(new Dimension(400, 700));
         scrollPane.createVerticalScrollBar();
         mainPanel.add(scrollPane);
-        JLabel totalPrice = new JLabel("$"+order.calculateFinalPrice());
+        JLabel totalPrice = new JLabel("$" + order.calculateFinalPrice());
         totalPrice.setHorizontalAlignment(JLabel.CENTER);
-        totalPrice.setBounds(400,0,300,400);
+        totalPrice.setBounds(400, 0, 300, 400);
+        totalPrice.setFont(getClashFont().deriveFont(40f));
         mainPanel.add(totalPrice);
-        JButton checkoutButton = new JButton("Checkout");
-        checkoutButton.addMouseListener(new  MouseAdapter() {
+        JButton checkoutButton = new ClashButton("Checkout", 300, 300);
+        checkoutButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Checkout Successful for $"+order.calculateFinalPrice());
+                JOptionPane.showMessageDialog(null, "Checkout Successful for $" + order.calculateFinalPrice());
                 System.exit(0);
             }
         });
@@ -192,12 +190,14 @@ public class GUI extends JFrame {
         for (FoodItem item : list) {
             FoodItemPanel panel = new FoodItemPanel(item, this, order);
             panel.setPreferredSize(new Dimension(175, 175));
+            panel.setBounds(0,0,175, 175);
             mainPanel.add(panel);
         }
         this.add(mainPanel);
         mainPanel.setVisible(true);
         repaint();
     }
+
     public void makeFoodPanel(FoodItem o, Order order) {
         hidePanels();
         FoodInfoPanel foodPanel = new FoodInfoPanel(o, order);
@@ -213,11 +213,13 @@ public class GUI extends JFrame {
         foodPanel.repaint();
         repaint();
     }
+
     public void hidePanels() {
         mainPanel.setVisible(false);
         tabs.setVisible(false);
-        
+
     }
+
     public void showPanels() {
         mainPanel.setVisible(true);
         tabs.setVisible(true);

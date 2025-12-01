@@ -78,7 +78,7 @@ class FoodItemPanel extends JPanel {
 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        RoundRectangle2D roundedRect = new RoundRectangle2D.Float(0, 0, ITEM_SIZE, ITEM_SIZE, 20, 20);
+        RoundRectangle2D roundedRect = new RoundRectangle2D.Float(0, 0, ITEM_SIZE, ITEM_SIZE, 10, 10);
         g2d.setClip(roundedRect);
         g2d.drawImage(image, 0, 0, ITEM_SIZE, ITEM_SIZE, null);
 
