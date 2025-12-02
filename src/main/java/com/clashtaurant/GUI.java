@@ -37,6 +37,14 @@ public class GUI extends JFrame {
             MenuRegistry.init();
         } catch (Throwable ignored) {
         }
+
+        try {
+            Image icon = new ImageIcon(getClass().getResource("/images/icon.png")).getImage();
+            this.setIconImage(icon); // 'this' refers to the JFrame instance
+        } catch (NullPointerException e) {
+            System.err.println("Icon image not found: " + e.getMessage());
+        }
+
         //Create frame
         this.setBounds(0, 0, 1000, 800);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -179,7 +187,7 @@ public class GUI extends JFrame {
             this.remove(mainPanel);
         }
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(4, 4));
+        mainPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         mainPanel.setBounds(100, 100, 700, 700);
         mainPanel.setBackground(Color.WHITE);
         List<FoodItem> list = switch (category) {

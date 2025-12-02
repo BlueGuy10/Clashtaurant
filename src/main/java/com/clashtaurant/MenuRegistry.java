@@ -11,7 +11,6 @@ public final class MenuRegistry {
         if (initialized) return;
         initialized = true;
 
-        // Instantiate each available menu item once so it self-registers.
         // Mains
         new com.clashtaurant.foods.mains.Barbarianburger();
         new com.clashtaurant.foods.mains.ExecutionersSoup();
